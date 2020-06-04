@@ -4,7 +4,8 @@ layout: page
 
 {{ content }}
 
-{% for tag in site.categories %}
+{% assign sortedCategories = site.categories | sort %}
+{% for tag in sortedCategories %}
   {% assign t = tag | first %}
   {% assign posts = tag | last %}
 
