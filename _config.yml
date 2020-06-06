@@ -28,7 +28,7 @@ twitter_username: luckolen
 github_username:  luckolen
 
 # Build settings
-theme: minima
+theme: jekyll-theme-slate
 plugins:
   - jekyll-feed
 
