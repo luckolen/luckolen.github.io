@@ -2,7 +2,7 @@
 permalink: /posts/HTB/Jarvis
 title:  "HTB Jarvis"
 author: Luc Kolen
-description: "Nest is an easy Linux machine on HTB"
+description: "Jarvis is a medium Linux machine on HTB"
 categories:
   - CTF
   - HTB
