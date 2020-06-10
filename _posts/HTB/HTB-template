@@ -1,0 +1,13 @@
+---
+permalink: /posts/HTB/{machine name}
+title:  "HTB {machine name}"
+author: Luc Kolen
+description: "Forest is a(n) {difficulty} {operating system} machine on HTB"
+categories:
+  - CTF
+  - HTB
+tags:
+  - HTB
+  - {operating system}
+  - {software}
+---
