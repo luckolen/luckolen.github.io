@@ -28,6 +28,7 @@ tags:
   - [Privilege escalation](#privilege-escalation)
   - [TL;DR](#tldr)
   - [Bonus](#bonus)
+    - [Department login bypass](#department-login-bypass)
     - [phpLiteAdmin](#phpliteadmin)
       - [Login brute force](#login-brute-force-1)
       - [Shell](#shell)
@@ -323,6 +324,32 @@ root@nineveh:~# cat /root/root.txt
 ## Bonus
 
 This wasn't used during initial exploitation, but could've been useful or provided another path.
+
+### Department login bypass
+
+During the original exploitation Hydra was used to brute force the password. It turns out that this login page was vulnerable to a PHP exploit by changing the data type of the password.
+
+Original request
+
+```http
+POST /department/login.php HTTP/1.1
+...
+
+username=admin&password=test
+```
+
+Request edited in Burp Suite
+
+```http
+POST /department/login.php HTTP/1.1
+...
+
+username=admin&password[]=
+```
+
+Changing the parameter from `password` to `password[]` will change the datatype to an `array`. The `strcmp` function in PHP is used to compare two `string` values and return the first index of the character where the strings are different. If one of the parameters in this function is an `array` it will throw a warning, but continue execution and return `NULL`. If only the values and not the types are compared in PHP this `NULL` will equal `0` so the output of the function if both `string` parameters in `strcmp` match.
+
+Doing this this way would've resulted in a part from start to root without any brute forcing.
 
 ### phpLiteAdmin
 
