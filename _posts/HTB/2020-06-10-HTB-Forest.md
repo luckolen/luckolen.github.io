@@ -7,10 +7,11 @@ categories:
   - CTF
   - HTB
 tags:
-  - HTB
+  - HTB-Easy
   - Windows
   - RPC
   - AS-Rep roasting
+  - Hashcat
   - BloodHound
 ---
 # 10.10.10.161 - Forest

@@ -7,7 +7,7 @@ categories:
   - CTF
   - HTB
 tags:
-  - HTB
+  - HTB-Medium
   - Linux
   - Knockd
   - phpLiteAdmin

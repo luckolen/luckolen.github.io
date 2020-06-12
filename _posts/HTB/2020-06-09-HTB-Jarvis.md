@@ -7,9 +7,10 @@ categories:
   - CTF
   - HTB
 tags:
-  - HTB
+  - HTB-Medium
   - Linux
-  - SQL
+  - SQL injection
+  - Hashcat
   - SUID
 ---
 # 10.10.10.143 - Jarvis
