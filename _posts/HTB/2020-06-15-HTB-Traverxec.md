@@ -32,7 +32,7 @@ luc@kali:~/HTB/Traverxec$ nmap -vv --reason -Pn -sV -sC --version-all 10.10.10.1
 
 |Port|Service|Version
 |---|---|---|
-22/tcp|ssh|OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
+tcp/22|ssh|OpenSSH 7.9p1 Debian 10+deb10u1 (protocol 2.0)
 tcp/80|http|nostromo 1.9.6
 
 ## Nostromo to reverse shell
