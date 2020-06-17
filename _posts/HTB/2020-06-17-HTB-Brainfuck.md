@@ -176,7 +176,6 @@ orestis
 I am opening up an encrypted thread. Talk to you there!
 
 Orestis - Hacking for fun and profit
-
 ```
 
 ```text
@@ -295,7 +294,6 @@ Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-75-generic x86_64)
 0 packages can be updated.
 0 updates are security updates.
 
-
 You have mail.
 Last login: Wed May  3 19:46:00 2017 from 10.10.11.4
 orestis@brainfuck:~$ id
@@ -314,7 +312,7 @@ debug.txt  encrypt.sage  mail  output.txt  user.txt
 ```
 
 ```text
-debug.txt
+# debug.txt
 
 7493025776465062819629921475535241674460826792785520881387158343265274170009282504884941039852933109163193651830303308312565580445669284847225535166520307
 7020854527787566735458858381555452648322845008266612906844847937070333480373963284146649074252278753696897245898433245929775591091774274652021374143174079
@@ -322,7 +320,7 @@ debug.txt
 ```
 
 ```python
-encrypt.sage
+# encrypt.sage
 
 nbits = 1024
 
@@ -347,12 +345,12 @@ debug.write(str(e)+'\n')
 ```
 
 ```text
-output.txt
+# output.txt
 
 Encrypted Password: 44641914821074071930297814589851746700593470770417111804648920018396305246956127337150936081144106405284134845851392541080862652386840869768622438038690803472550278042463029816028777378141217023336710545449512973950591755053735796799773369044083673911035030605581144977552865771395578778515514288930832915182
 ```
 
-We can see that the debug.txt file contains the `p`, `q` and `e` used in the RSA encryption. Online we can find [this script](https://gist.github.com/intrd/3f6e8f02e16faa54729b9288a8f59582) that can give us the private key.
+We can see that the debug.txt file contains the `p`, `q` and `e` used in the RSA encryption. Online we can find [this script](https://gist.github.com/intrd/3f6e8f02e16faa54729b9288a8f59582) that will use these values to decrypt the value, `ct`.
 
 ```python
 #!/usr/bin/python
