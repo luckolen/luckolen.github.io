@@ -161,7 +161,7 @@ Loggin in with these credentials gives access to 2 new discussions on the forum.
 ```text
 SSH Access
 
-adminApr
+admin
 SSH Access was upgraded to make use of keys. Password login is permanently disabled.
 
 orestis
