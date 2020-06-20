@@ -29,7 +29,6 @@ tags:
 
 ```bash
 luc@kali:~/HTB/SwagShop$ nmap -vv --reason -Pn -A --osscan-guess --version-all -p- 10.10.10.140
-
 ```
 
 |Port|Service|Version

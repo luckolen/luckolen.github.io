@@ -10,7 +10,7 @@ tags:
   - HTB-Medium
   - Linux
   - Hydra
-  - Loca file inclusion
+  - Local file inclusion
   - Knockd
   - phpLiteAdmin
   - Steganography
