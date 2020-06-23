@@ -14,6 +14,7 @@ tags:
   - SNMP
   - IPv6
   - Buffer overflow
+  - Ghidra
 ---
 # 10.10.10.20 - Sneaky
 
