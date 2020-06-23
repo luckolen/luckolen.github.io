@@ -11,7 +11,7 @@ tags:
   - Windows
   - XSS
   - XSRF
-  - SQL
+  - SQL injection
   - Hashcat
   - Chisel
   - Buffer overflow
