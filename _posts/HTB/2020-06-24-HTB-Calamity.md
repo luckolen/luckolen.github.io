@@ -15,6 +15,10 @@ tags:
 ---
 # 10.10.10.27 - Calamity
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/37)|[forGP](https://www.hackthebox.eu/home/users/profile/198)|40|
+
 - [10.10.10.27 - Calamity](#10101027---calamity)
   - [Open ports](#open-ports)
   - [HTTP](#http)

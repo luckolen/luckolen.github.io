@@ -14,6 +14,10 @@ tags:
 ---
 # 10.10.10.9 - Bastard
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/7)|[ch4p](https://www.hackthebox.eu/home/users/profile/1)|30|
+
 - [10.10.10.9 - Bastard](#1010109---bastard)
   - [Open ports](#open-ports)
   - [HTTP](#http)

@@ -18,6 +18,10 @@ tags:
 ---
 # 10.10.10.184 - ServMon
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/240)|[dmw0ng](https://www.hackthebox.eu/home/users/profile/82600)|20|
+
 - [10.10.10.184 - ServMon](#101010184---servmon)
   - [Open ports](#open-ports)
   - [FTP](#ftp)

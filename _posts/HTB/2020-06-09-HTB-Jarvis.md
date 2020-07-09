@@ -15,7 +15,11 @@ tags:
 ---
 # 10.10.10.143 - Jarvis
 
-This machine was done as OSCP preparation so without SQLMap.
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/194)|[manulqwerty](https://www.hackthebox.eu/home/users/profile/25205) & [Ghostpp7](https://www.hackthebox.eu/home/users/profile/24844)|30|
+
+This machine was done as OSCP preparation so without SQLMap, but it was later also completed with SQLMap in [Bonus](#bonus).
 
 - [10.10.10.143 - Jarvis](#101010143---jarvis)
   - [Open ports](#open-ports)

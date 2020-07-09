@@ -14,6 +14,10 @@ tags:
 ---
 # 10.10.10.68 - Bashed
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/118)|[Arrexel](https://www.hackthebox.eu/home/users/profile/2904)|20|
+
 - [10.10.10.68 - Bashed](#10101068---bashed)
   - [Open ports](#open-ports)
   - [HTTP](#http)

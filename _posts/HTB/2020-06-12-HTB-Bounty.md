@@ -14,6 +14,10 @@ tags:
 ---
 # 10.10.10.93 - Bounty
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/142)|[mrb3n](https://www.hackthebox.eu/home/users/profile/2984)|20|
+
 - [10.10.10.93 - Bounty](#10101093---bounty)
   - [Open ports](#open-ports)
   - [HTTP](#http)

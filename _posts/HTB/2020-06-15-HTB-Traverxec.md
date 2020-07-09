@@ -15,6 +15,10 @@ tags:
 ---
 # 10.10.10.165 - Traverxec
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/217)|[jkr](https://www.hackthebox.eu/home/users/profile/77141)|20|
+
 - [10.10.10.165 - Traverxec](#101010165---traverxec)
   - [Open ports](#open-ports)
   - [Nostromo to reverse shell](#nostromo-to-reverse-shell)

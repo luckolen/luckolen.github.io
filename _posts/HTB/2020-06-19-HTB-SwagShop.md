@@ -13,6 +13,10 @@ tags:
 ---
 # 10.10.10.140 - SwagShop
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/188)|[ch4p](https://www.hackthebox.eu/home/users/profile/1)|20|
+
 - [10.10.10.140 - SwagShop](#101010140---swagshop)
   - [Open ports](#open-ports)
   - [HTTP](#http)

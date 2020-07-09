@@ -17,6 +17,10 @@ tags:
 ---
 # 10.10.10.43 - Nineveh
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/54)|[Yas3r](https://www.hackthebox.eu/home/users/profile/596)|30|
+
 - [10.10.10.43 - Nineveh](#10101043---nineveh)
   - [Open ports](#open-ports)
   - [SSL Certificate shows hostname](#ssl-certificate-shows-hostname)

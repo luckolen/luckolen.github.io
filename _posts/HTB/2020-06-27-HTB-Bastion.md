@@ -16,6 +16,10 @@ tags:
 ---
 # 10.10.10.134 - Bastion
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/186)|[L4mpje](https://www.hackthebox.eu/home/users/profile/29267)|20|
+
 - [10.10.10.134 - Bastion](#101010134---bastion)
   - [Open ports](#open-ports)
   - [SMB](#smb)

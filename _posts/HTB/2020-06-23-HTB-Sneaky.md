@@ -18,6 +18,10 @@ tags:
 ---
 # 10.10.10.20 - Sneaky
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/19)|[trickster0](https://www.hackthebox.eu/home/users/profile/169)|30|
+
 - [10.10.10.20 - Sneaky](#10101020---sneaky)
   - [Open ports](#open-ports)
     - [TCP](#tcp)

@@ -15,6 +15,10 @@ tags:
 ---
 # 10.10.10.10 - Tenten
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/8)|[ch4p](https://www.hackthebox.eu/home/users/profile/1)|30|
+
 - [10.10.10.10 - Tenten](#10101010---tenten)
   - [Open ports](#open-ports)
   - [HTTP](#http)

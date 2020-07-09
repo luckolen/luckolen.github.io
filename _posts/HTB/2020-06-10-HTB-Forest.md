@@ -16,6 +16,10 @@ tags:
 ---
 # 10.10.10.161 - Forest
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/212)|[egre55](https://www.hackthebox.eu/home/users/profile/1190) & [mrb3n](https://www.hackthebox.eu/home/users/profile/2984)|20|
+
 - [10.10.10.161 - Forest](#101010161---forest)
   - [Open ports](#open-ports)
     - [TCP](#tcp)

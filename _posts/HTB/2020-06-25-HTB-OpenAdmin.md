@@ -17,6 +17,10 @@ tags:
 ---
 # 10.10.10.171 - OpenAdmin
 
+|Hack The Box|Created by|Points|
+|---|---|---|
+|[Link](https://www.hackthebox.eu/home/machines/profile/222)|[dmw0ng](https://www.hackthebox.eu/home/users/profile/82600)|20|
+
 - [10.10.10.171 - OpenAdmin](#101010171---openadmin)
   - [Open ports](#open-ports)
   - [HTTP](#http)
