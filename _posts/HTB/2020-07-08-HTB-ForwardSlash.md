@@ -980,7 +980,7 @@ luc@kali:~/HTB/ForwardSlash/luks$ xxd container.luks
 018ffff0: 0000 0000 0000 0000 0000 0000 0000 0000  ................
 ```
 
-We create an empty 25MG file.
+We create an empty 25MB file.
 
 ```bash
 luc@kali:~/HTB/ForwardSlash/luks$ sudo cryptsetup luksFormat container.luks
