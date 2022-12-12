@@ -25,7 +25,7 @@ tags:
 ## NMAP Top 1000 TCP
 ```
 $ sudo nmap 10.10.10.169 --top-ports 1000 -sC -sV  -v -T5 -A -Pn -oA NMAP/resolute
-[...
+[...]
 PORT     STATE SERVICE      VERSION
 88/tcp   open  kerberos-sec Microsoft Windows Kerberos (server time: 2022-12-12 12:00:39Z)
 135/tcp  open  msrpc        Microsoft Windows RPC
@@ -37,7 +37,7 @@ PORT     STATE SERVICE      VERSION
 636/tcp  open  tcpwrapped
 3268/tcp open  ldap         Microsoft Windows Active Directory LDAP (Domain: megabank.local, Site: Default-First-Site-Name)
 3269/tcp open  tcpwrapped
-[...
+[...]
 Service Info: Host: RESOLUTE; OS: Windows; CPE: cpe:/o:microsoft:windows
 
 Host script results:
