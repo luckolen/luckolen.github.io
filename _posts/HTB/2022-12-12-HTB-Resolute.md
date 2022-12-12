@@ -1,3 +1,16 @@
+---
+permalink: /posts/HTB/Resolute
+title:  "HTB Resolute"
+author: Luc Kolen
+description: "Resolute is a medium Windows machine on HTB"
+categories:
+  - CTF
+  - HTB
+tags: 
+  - HTB-Medium
+  - Windows 
+  - DNSAdmin
+---
 # Resolute
 
 - [Resolute](#resolute)
